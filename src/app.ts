@@ -1,4 +1,5 @@
 import express from "express";
+import type { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import bodyParser from "body-parser";
@@ -6,6 +7,7 @@ import morgan from "morgan";
 
 import connectToDB from "./config/db";
 import { logger } from "./utils/logger";
+import { handleErrors } from "./middleware/handleErrors";
 
 const app = express();
 config();
@@ -20,6 +22,12 @@ app.use(
 app.use(morgan("tiny"));
 
 const port = process.env.PORT ?? 9000;
+
+// APP ROUTES
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  handleErrors(error, req, res, next);
+});
 
 connectToDB()
   .then(() => {

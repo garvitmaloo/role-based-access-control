@@ -3,7 +3,8 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: "standard-with-typescript",
+  plugins: ["@typescript-eslint", "prettier"],
+  extends: ["standard-with-typescript", "prettier"],
   overrides: [
     {
       env: {
@@ -23,6 +24,7 @@ module.exports = {
     "no-console": "warn",
     "@typescript-eslint/quotes": ["error", "double"],
     "@typescript-eslint/semi": "off",
-    "@typescript-eslint/member-delimiter-style": "off"
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 };
