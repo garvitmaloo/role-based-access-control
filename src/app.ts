@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 
 import connectToDB from "./config/db";
+import { logger } from "./utils/logger";
 
 const app = express();
 config();
@@ -23,9 +24,9 @@ const port = process.env.PORT ?? 9000;
 connectToDB()
   .then(() => {
     app.listen(port, () => {
-      console.log(`Connected to DB and server started on port ${port}`);
+      logger.info(`Connected to DB and server started on port ${port}`);
     });
   })
   .catch((err: Error) => {
-    console.error(err.message);
+    logger.error(err.message);
   });
