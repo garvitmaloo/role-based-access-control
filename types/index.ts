@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import type { Document } from "mongoose";
 
 export interface IStandardResponse<T> {
@@ -11,9 +12,6 @@ export interface IStandardResponse<T> {
 export interface IResource extends Document {
   name: string;
   rolePermissionsMap: {
-    admin: string[];
-    subAdmin: string[];
-    members: string[];
-    guests: string[];
+    [key: string]: string[];
   };
 }
