@@ -42,3 +42,19 @@ export const isAuthorized = async (
 
   next();
 };
+
+export const isAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const role: string = req.body.role;
+
+  if (role !== "admin") {
+    res.statusCode = 403;
+    next(new Error("Only admin is authorized for this action"));
+    return;
+  }
+
+  next();
+};
