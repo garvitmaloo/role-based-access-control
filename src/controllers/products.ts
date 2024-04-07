@@ -1,5 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
-import { fetchAllProductsService } from "../service/products";
+import {
+  createNewProductService,
+  fetchAllProductsService
+} from "../service/products";
 
 export const getAllProductsController = async (
   req: Request,
@@ -21,7 +24,20 @@ export const postCreateProductController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {};
+): Promise<void> => {
+  const name: string = req.body.name;
+  const price: number = req.body.price;
+
+  const createNewProductResponse = await createNewProductService(name, price);
+
+  if (createNewProductResponse.error !== null) {
+    res.statusCode = createNewProductResponse.error.statusCode;
+    next(new Error(createNewProductResponse.error.message));
+    return;
+  }
+
+  res.status(201).json(createNewProductResponse);
+};
 
 export const patchUpdateProductController = async (
   req: Request,

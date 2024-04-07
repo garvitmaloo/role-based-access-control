@@ -20,3 +20,30 @@ export const fetchAllProductsService = async (): Promise<
     };
   }
 };
+
+export const createNewProductService = async (
+  name: string,
+  price: number
+): Promise<IStandardResponse<IProduct>> => {
+  try {
+    const product = new Product({
+      name,
+      price
+    });
+
+    const newProduct = await product.save();
+
+    return {
+      error: null,
+      result: newProduct
+    };
+  } catch (err) {
+    return {
+      error: {
+        statusCode: 500,
+        message: "Could not create a new product"
+      },
+      result: null
+    };
+  }
+};
