@@ -16,8 +16,8 @@ productsRouter.get("/", isAuthorized, getAllProductsController);
 
 productsRouter.post("/new", isAuthorized, postCreateProductController);
 
-productsRouter.patch("/", isAuthorized, patchUpdateProductController);
+productsRouter.patch("/:productId", isAuthorized, patchUpdateProductController);
 
-productsRouter.delete("/", isAuthorized, deleteProductController);
+productsRouter.delete("/:productId", isAuthorized, deleteProductController);
 
 export { productsRouter };

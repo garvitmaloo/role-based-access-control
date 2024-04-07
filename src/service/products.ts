@@ -47,3 +47,30 @@ export const createNewProductService = async (
     };
   }
 };
+
+export const deleteProductService = async (
+  productId: string
+): Promise<IStandardResponse<string>> => {
+  try {
+    const productRecord = await Product.findById(productId);
+
+    if (productRecord === null) {
+      throw new Error("No product found with the given ID");
+    }
+
+    await productRecord.deleteOne();
+
+    return {
+      error: null,
+      result: "Product deleted successfully"
+    };
+  } catch (err) {
+    return {
+      error: {
+        statusCode: 500,
+        message: (err as Error).message
+      },
+      result: null
+    };
+  }
+};

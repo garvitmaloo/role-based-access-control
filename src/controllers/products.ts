@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import {
   createNewProductService,
+  deleteProductService,
   fetchAllProductsService
 } from "../service/products";
 
@@ -39,6 +40,7 @@ export const postCreateProductController = async (
   res.status(201).json(createNewProductResponse);
 };
 
+// Skipping this functionality
 export const patchUpdateProductController = async (
   req: Request,
   res: Response,
@@ -49,4 +51,15 @@ export const deleteProductController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {};
+): Promise<void> => {
+  const productId: string = req.params.productId;
+  const deleteProductResponse = await deleteProductService(productId);
+
+  if (deleteProductResponse.error !== null) {
+    res.statusCode = deleteProductResponse.error.statusCode;
+    next(new Error(deleteProductResponse.error.message));
+    return;
+  }
+
+  res.status(200).json(deleteProductResponse);
+};
