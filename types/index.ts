@@ -15,3 +15,8 @@ export interface IResource extends Document {
     [key: string]: string[];
   };
 }
+
+export interface IProduct extends Document {
+  name: string;
+  price: number;
+}
